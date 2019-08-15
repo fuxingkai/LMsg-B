@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.lmsg.mybatis.mapper.CtCommentLikeDao">
+  <resultMap id="BaseResultMap" type="com.frank.lmsg.mybatis.domain.CtCommentLike">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="ctId" jdbcType="BIGINT" property="ctid" />
+    <result column="ctCommentId" jdbcType="BIGINT" property="ctcommentid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, openId, ctId, ctCommentId
+  </sql>
+  <select id="selectByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLikeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ctCommentLike
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ctCommentLike
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ctCommentLike
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLikeExample">
+    delete from ctCommentLike
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLike" useGeneratedKeys="true">
+    insert into ctCommentLike (openId, ctId, ctCommentId
+      )
+    values (#{openid,jdbcType=VARCHAR}, #{ctid,jdbcType=BIGINT}, #{ctcommentid,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLike" useGeneratedKeys="true">
+    insert into ctCommentLike
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        openId,
+      </if>
+      <if test="ctid != null">
+        ctId,
+      </if>
+      <if test="ctcommentid != null">
+        ctCommentId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null">
+        #{ctid,jdbcType=BIGINT},
+      </if>
+      <if test="ctcommentid != null">
+        #{ctcommentid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLikeExample" resultType="java.lang.Long">
+    select count(*) from ctCommentLike
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ctCommentLike
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.openid != null">
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctid != null">
+        ctId = #{record.ctid,jdbcType=BIGINT},
+      </if>
+      <if test="record.ctcommentid != null">
+        ctCommentId = #{record.ctcommentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ctCommentLike
+    set id = #{record.id,jdbcType=BIGINT},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      ctId = #{record.ctid,jdbcType=BIGINT},
+      ctCommentId = #{record.ctcommentid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLike">
+    update ctCommentLike
+    <set>
+      <if test="openid != null">
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null">
+        ctId = #{ctid,jdbcType=BIGINT},
+      </if>
+      <if test="ctcommentid != null">
+        ctCommentId = #{ctcommentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.frank.lmsg.mybatis.domain.CtCommentLike">
+    update ctCommentLike
+    set openId = #{openid,jdbcType=VARCHAR},
+      ctId = #{ctid,jdbcType=BIGINT},
+      ctCommentId = #{ctcommentid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

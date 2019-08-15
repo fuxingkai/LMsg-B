@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.lmsg.mybatis.mapper.CtDao">
+  <resultMap id="BaseResultMap" type="com.frank.lmsg.mybatis.domain.Ct">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="acticleLink" jdbcType="VARCHAR" property="acticlelink" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="des" jdbcType="VARCHAR" property="des" />
+    <result column="look" jdbcType="INTEGER" property="look" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="wxPublicName" jdbcType="VARCHAR" property="wxpublicname" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, openId, acticleLink, createTime, des, look, title, wxPublicName
+  </sql>
+  <select id="selectByExample" parameterType="com.frank.lmsg.mybatis.domain.CtExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ct
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ct
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ct
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.frank.lmsg.mybatis.domain.CtExample">
+    delete from ct
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.Ct" useGeneratedKeys="true">
+    insert into ct (openId, acticleLink, createTime, 
+      des, look, title, wxPublicName
+      )
+    values (#{openid,jdbcType=VARCHAR}, #{acticlelink,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{des,jdbcType=VARCHAR}, #{look,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{wxpublicname,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.Ct" useGeneratedKeys="true">
+    insert into ct
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        openId,
+      </if>
+      <if test="acticlelink != null">
+        acticleLink,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="des != null">
+        des,
+      </if>
+      <if test="look != null">
+        look,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="wxpublicname != null">
+        wxPublicName,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="acticlelink != null">
+        #{acticlelink,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="des != null">
+        #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="look != null">
+        #{look,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="wxpublicname != null">
+        #{wxpublicname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.frank.lmsg.mybatis.domain.CtExample" resultType="java.lang.Long">
+    select count(*) from ct
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ct
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.openid != null">
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.acticlelink != null">
+        acticleLink = #{record.acticlelink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.des != null">
+        des = #{record.des,jdbcType=VARCHAR},
+      </if>
+      <if test="record.look != null">
+        look = #{record.look,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.wxpublicname != null">
+        wxPublicName = #{record.wxpublicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ct
+    set id = #{record.id,jdbcType=BIGINT},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      acticleLink = #{record.acticlelink,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      des = #{record.des,jdbcType=VARCHAR},
+      look = #{record.look,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      wxPublicName = #{record.wxpublicname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.frank.lmsg.mybatis.domain.Ct">
+    update ct
+    <set>
+      <if test="openid != null">
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="acticlelink != null">
+        acticleLink = #{acticlelink,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="des != null">
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+      <if test="look != null">
+        look = #{look,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="wxpublicname != null">
+        wxPublicName = #{wxpublicname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.frank.lmsg.mybatis.domain.Ct">
+    update ct
+    set openId = #{openid,jdbcType=VARCHAR},
+      acticleLink = #{acticlelink,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      des = #{des,jdbcType=VARCHAR},
+      look = #{look,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      wxPublicName = #{wxpublicname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

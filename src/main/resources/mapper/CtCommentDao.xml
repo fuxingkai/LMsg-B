@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.frank.lmsg.mybatis.mapper.CtCommentDao">
+  <resultMap id="BaseResultMap" type="com.frank.lmsg.mybatis.domain.CtComment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="ctId" jdbcType="BIGINT" property="ctid" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="isChoose" jdbcType="BIT" property="ischoose" />
+    <result column="isNew" jdbcType="BIT" property="isnew" />
+    <result column="isTop" jdbcType="BIT" property="istop" />
+    <result column="parentId" jdbcType="BIGINT" property="parentid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, openId, ctId, content, createTime, isChoose, isNew, isTop, parentId
+  </sql>
+  <select id="selectByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ctComment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ctComment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ctComment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentExample">
+    delete from ctComment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.CtComment" useGeneratedKeys="true">
+    insert into ctComment (openId, ctId, content, 
+      createTime, isChoose, isNew, 
+      isTop, parentId)
+    values (#{openid,jdbcType=VARCHAR}, #{ctid,jdbcType=BIGINT}, #{content,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{ischoose,jdbcType=BIT}, #{isnew,jdbcType=BIT}, 
+      #{istop,jdbcType=BIT}, #{parentid,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.frank.lmsg.mybatis.domain.CtComment" useGeneratedKeys="true">
+    insert into ctComment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        openId,
+      </if>
+      <if test="ctid != null">
+        ctId,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+      <if test="ischoose != null">
+        isChoose,
+      </if>
+      <if test="isnew != null">
+        isNew,
+      </if>
+      <if test="istop != null">
+        isTop,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null">
+        #{ctid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ischoose != null">
+        #{ischoose,jdbcType=BIT},
+      </if>
+      <if test="isnew != null">
+        #{isnew,jdbcType=BIT},
+      </if>
+      <if test="istop != null">
+        #{istop,jdbcType=BIT},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.frank.lmsg.mybatis.domain.CtCommentExample" resultType="java.lang.Long">
+    select count(*) from ctComment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ctComment
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.openid != null">
+        openId = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ctid != null">
+        ctId = #{record.ctid,jdbcType=BIGINT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ischoose != null">
+        isChoose = #{record.ischoose,jdbcType=BIT},
+      </if>
+      <if test="record.isnew != null">
+        isNew = #{record.isnew,jdbcType=BIT},
+      </if>
+      <if test="record.istop != null">
+        isTop = #{record.istop,jdbcType=BIT},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ctComment
+    set id = #{record.id,jdbcType=BIGINT},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      ctId = #{record.ctid,jdbcType=BIGINT},
+      content = #{record.content,jdbcType=VARCHAR},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      isChoose = #{record.ischoose,jdbcType=BIT},
+      isNew = #{record.isnew,jdbcType=BIT},
+      isTop = #{record.istop,jdbcType=BIT},
+      parentId = #{record.parentid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.frank.lmsg.mybatis.domain.CtComment">
+    update ctComment
+    <set>
+      <if test="openid != null">
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="ctid != null">
+        ctId = #{ctid,jdbcType=BIGINT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ischoose != null">
+        isChoose = #{ischoose,jdbcType=BIT},
+      </if>
+      <if test="isnew != null">
+        isNew = #{isnew,jdbcType=BIT},
+      </if>
+      <if test="istop != null">
+        isTop = #{istop,jdbcType=BIT},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.frank.lmsg.mybatis.domain.CtComment">
+    update ctComment
+    set openId = #{openid,jdbcType=VARCHAR},
+      ctId = #{ctid,jdbcType=BIGINT},
+      content = #{content,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      isChoose = #{ischoose,jdbcType=BIT},
+      isNew = #{isnew,jdbcType=BIT},
+      isTop = #{istop,jdbcType=BIT},
+      parentId = #{parentid,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

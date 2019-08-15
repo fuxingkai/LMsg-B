@@ -1,0 +1,54 @@
+# ######
+# TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+# ######
+Configuration:
+  status: INFO
+  name: LogConfig
+  properties:
+    property:
+      name: filename
+      value: logs/lmsg.log
+  thresholdFilter:
+    level: INFO
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+      Filters:
+        ThresholdFilter:
+          level: INFO
+    File:
+      name: File
+      fileName: ${filename}
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+      Filters:
+        ThresholdFilter:
+          level: WARN
+  Loggers:
+    logger:
+      -
+        name: org.springframework
+        level: INFO
+        additivity: false
+        ThreadContextMapFilter:
+          KeyValuePair:
+            key: test
+            value: 123
+        AppenderRef:
+          ref: STDOUT
+      -
+        name: com.frank.lmsg
+        level: INFO
+        additivity: false
+        AppenderRef:
+          - ref: STDOUT
+          - ref: File
+    Root:
+      level: INFO
+      AppenderRef:
+        -
+          ref: STDOUT
+        -
+          ref: File
